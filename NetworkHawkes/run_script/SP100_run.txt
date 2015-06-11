@@ -1,0 +1,39 @@
+# 	this is the script to perform synthetic analysis
+# 	java argument
+#		header, runname, isER, isLatent, T, Tall, K, N_bin, tmax, 
+#   	allow_self_connect, network_ini, baseline_ini skip_W, skip_W_hyper, W_fix, 
+#		skip_theta, skip_lambda, skip_A, nitr show_diag sample_A_block
+#		M, period, how_many_flip seed constant_baseline unify_Z skip_non_used_w
+
+javac -cp library/\* src/data/*.java src/mathutil/*.java src/sampler/*.java
+
+cd src
+
+
+# 1. Net Hawkes (slow)
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model sp100/event true false 92856 116071 100 92856 12 false 0.5 -1 false false 0.8 false false false 2000 false false 41 23214 1 0011 false false false false 1
+
+
+# 2. Net Hawkes, with 1 random A flip a time
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model sp100/event true false 92856 116071 100 92856 12 false 0.5 -1 false false 0.8 false false false 2000 false true 41 23214 1 0012 false false false false 1 
+
+# 3. Net Hawkes, with 10 random A flip a time
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model sp100/event true false 92856 116071 100 92856 12 false 0.5 -1 false false 0.8 false false false 2000 false true 41 23214 10 0013 false false false false 1 
+
+# 4. Net Hawkes Latent space (slow)
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model sp100/event false true 92856 116071 100 92856 12 false 0.5 -1 false false 0.8 false false false 2000 false false 41 23214 1 0014 false false false false 1 
+
+# 5. Net Hawkes Latent space, 1 flip a time
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model sp100/event false true 92856 116071 100 92856 12 false 0.5 -1 false false 0.8 false false false 2000 false true 41 23214 1 0015 false false false false 1 
+
+# 6. Net Hawkes Latent space, 10 flip a time
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model sp100/event false true 92856 116071 100 92856 12 false 0.5 -1 false false 0.8 false false false 2000 false true 41 23214 10 0016 false false false false 1 
+
+# 7. Std Hawkes
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model sp100/event true false 92856 116071 100 92856 12 false 1 -1 false false 0.8 false false true 2000 false false 41 23214 1 0017 false false false false 1 
+
+# 8. Empty network (update to sd = 1)
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model sp100/event true false 92856 116071 100 92856 12 false 0 -1 true true 0.8 true false true 500 false false 41 23214 1 0018 false false false true 1
+
+# 9. Empty network (update to sd = 100)
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model sp100/event true false 92856 116071 100 92856 12 false 0 -1 true true 0.8 true false true 500 false false 41 23214 1 0019 false false false true 100 

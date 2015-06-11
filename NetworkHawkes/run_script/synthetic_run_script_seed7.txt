@@ -1,0 +1,34 @@
+# 	this is the script to perform synthetic analysis
+# 	java argument
+#		header, runname, isER, isLatent, T, Tall, K, N_bin, tmax, 
+#   	allow_self_connect, network_ini, baseline_ini skip_W, skip_W_hyper, W_fix, 
+#		skip_theta, skip_lambda, skip_A, nitr show_diag sample_A_block
+#		M, period, how_many_flip seed constant_baseline unify_Z skip_non_used_w
+
+javac -cp library/\* src/data/*.java src/mathutil/*.java src/sampler/*.java
+
+cd src
+
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model rhawkes-sim/seed7-net1 true false 900 1000 30 900 10 true 0.01 -1 false false 0.8 false false false 2000 true false -1 -1 1 0032 true false false &
+
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model rhawkes-sim/seed7-net2 true false 900 1000 30 900 10 true 0.01 -1 false false 0.8 false false false 2000 true false -1 -1 1 0032 true false false &
+
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model rhawkes-sim/seed7-net3 true false 900 1000 30 900 10 true 0.01 -1 false false 0.8 false false false 2000 true false -1 -1 1 0032 true false false &
+
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model rhawkes-sim/seed7-net4 true false 900 1000 30 900 10 true 0.01 -1 false false 0.8 false false false 2000 true false -1 -1 1 0032 true false false &
+
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model rhawkes-sim/seed7-net5 true false 900 1000 30 900 10 true 0.01 -1 false false 0.8 false false false 2000 true false -1 -1 1 0032 true false false &
+
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model rhawkes-sim/seed7-net6 true false 900 1000 30 900 10 true 0.01 -1 false false 0.8 false false false 2000 true false -1 -1 1 0032 true false false &
+
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model rhawkes-sim/seed7-net7 true false 900 1000 30 900 10 true 0.01 -1 false false 0.8 false false false 2000 true false -1 -1 1 0032 true false false &
+
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model rhawkes-sim/seed7-net8 true false 900 1000 30 900 10 true 0.01 -1 false false 0.8 false false false 2000 true false -1 -1 1 0032 true false false &
+
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model rhawkes-sim/seed7-net9 true false 900 1000 30 900 10 true 0.01 -1 false false 0.8 false false false 2000 true false -1 -1 1 0032 true false false &
+
+java -cp .:../library/\* -Xmx10g sampler/Hawkes_model rhawkes-sim/seed7-net10 true false 900 1000 30 900 10 true 0.01 -1 false false 0.8 false false false 2000 true false -1 -1 1 0032 true false false &
+
+Rscript ../Rcodes/synthetic_metrics.R 1 rhawkes-sim/seed7
+
+
