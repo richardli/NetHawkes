@@ -5,4 +5,4 @@ The paper to reproduce is Discovering Latent Network Structure in Point Process 
 
 The main algorithm is carried out in Java. There is a R codes folder containing R scripts also used in the process.
 
-Special thanks to Scott Linderman's kind help alone the way!
+Special thanks to Scott Linderman's kind help along the way!
