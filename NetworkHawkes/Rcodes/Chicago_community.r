@@ -139,6 +139,7 @@ location <- unlist(geocode('4135 S Morgan St, Chicago, IL 60609'))+c(0,.02)
 gmap <- get_map(location=location, zoom = 10, maptype = "terrain", source = "google", col="bw")
 
 # plot
+pdf("../figures/Chicago-cluster.pdf", width = 7, height = 7)
 gg <- ggmap(gmap)
 gg <- gg + geom_polygon(data=overlay2, aes(x=long, y=lat, group=group, fill =cluster), color="black")
 gg <- gg + coord_map()
@@ -147,3 +148,24 @@ gg <- gg + scale_fill_manual(values = c("blue2","green3", "red2", "orange2"))
 gg <- gg + guides(fill=FALSE)
 # gg <- gg + scale_fill_gradient(low = "white", high = "black")
 gg
+dev.off()
+
+pdf("../figures/Chicago-freq.pdf", width = 7, height = 7)
+gg <- ggmap(gmap)
+gg <- gg + geom_polygon(data=overlay2, aes(x=long, y=lat, group=group, fill =counts), color="black")
+gg <- gg + coord_map()
+gg <- gg + theme_bw()
+# gg <- gg + scale_fill_manual(values = c("blue2","green3", "red2", "orange2"))
+gg <- gg + scale_fill_gradient(low = "white", high = "black")
+gg <- gg + guides(fill=FALSE)
+gg
+dev.off()
+
+
+## check counts per cluster
+countlist <- count
+countlist <- countlist[-which(names(countlist) == "Missing")]
+clusterlist <- as.character(clusterdata$Cluster[match(names(countlist), clusterdata$Community)])
+listdata <- data.frame(countlist, clusterlist)
+boxplot(countlist ~ clusterlist, data = listdata)
+
